@@ -586,7 +586,7 @@ def _process_data_core(data: pd.DataFrame, now_ts: int) -> pd.DataFrame:
     df['time_urgency_score'] = vectorized_urgency(df['hours_left'], df['over_time'])
     # ratio/discount
     msrp_nonzero = df['msrp'].replace({0: pd.NA})
-    df['ratio_bid_to_msrp'] = (df['current_bid'] / msrp_nonzero).fillna(0.0).astype(float)
+    df['ratio_bid_to_msrp'] = (df['current_bid'] / msrp_nonzero).infer_objects(copy=False).fillna(0.0).astype(float)
     df['discount_pct'] = ((1 - df['ratio_bid_to_msrp']) * 100).clip(lower=0, upper=100).fillna(0)
     df['has_msrp'] = df['msrp'] > 0
     df['savings_amount'] = (df['msrp'] - df['current_bid']).clip(lower=0).fillna(0)
