@@ -296,7 +296,7 @@ def load_locations():
 def get_default_locations(locations):
     return [loc for loc in locations if loc.get('state') in ['KY', 'OH']]
 
-@st.cache_data(ttl=300)
+@st.cache_data(ttl=7200)
 def scrape_bidfta_data(location_ids, max_workers: int | None = None, max_auctions: int | None = None):
     _, locations = load_locations()
     loc_map = {loc['id']: loc for loc in locations}
