@@ -1064,13 +1064,13 @@ if data is not None:
     if 'otd_range' in locals() and otd_range is not None:
         mask &= original_data['otd_total'].between(otd_range[0], otd_range[1])
     if search_query:
-        mask &= (
-            original_data['item_title'].fillna('').str.contains(search_query, case=False, na=False, regex=False) |
-            original_data['brand'].fillna('').str.contains(search_query, case=False, na=False, regex=False) |
-            original_data['item_category1'].fillna('').str.contains(search_query, case=False, na=False, regex=False) |
-            original_data['item_category2'].fillna('').str.contains(search_query, case=False, na=False, regex=False) |
-            original_data['lot_code'].fillna('').str.contains(search_query, case=False, na=False, regex=False)
-        )
+        # all-words match: "outdoor shed" matches "resin shed for outdoor storage"
+        search_blob = (original_data['item_title'].fillna('') + ' ' + original_data['brand'].fillna('') + ' ' + original_data['item_category1'].fillna('') + ' ' + original_data['item_category2'].fillna('') + ' ' + original_data['lot_code'].fillna('')).str.lower()
+        words = search_query.lower().split()
+        word_mask = pd.Series(True, index=original_data.index)
+        for w in words:
+            word_mask &= search_blob.str.contains(w, na=False, regex=False)
+        mask &= word_mask
     if filter_incomplete:
         mask &= ~original_data['item_title'].fillna('').str.contains('incomplete', case=False, na=False, regex=False)
     if hide_seen and st.session_state.seen_ids:
