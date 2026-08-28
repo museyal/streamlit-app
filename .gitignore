@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.claude/
+.vscode/
+.agents/
+.DS_Store
+archive/
+docs/
+tests/
+lit_app_broken.py
+lit_app_old_backup.py
+lit_app.py.bak
+AGENTS.md
+todo.md
+*.csv
