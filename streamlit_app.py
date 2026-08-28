@@ -821,9 +821,7 @@ if data is not None:
                         with st.popover("Map / Directions"):
                             st.markdown(row['maphtml'], unsafe_allow_html=True)
                             st.link_button("Directions", f"https://www.google.com/maps/search/{row['address']} {row['city']} {row['state']}", type="secondary")
-            st.divider()
-            st.markdown("**Auction grouping - plan your pickup trip**")
-            st.caption("Collapsed by auction_title + endDate - shows items count, end time, pickup dates, map iframe.")
+        with st.expander("Auction grouping - plan your pickup trip", expanded=False):
             auc_grp = original_data.groupby(['auction_id','auction_title','auction_end_datetime','auction_location_nickname','auction_location_id','auction_location_address','auction_location_city','auction_location_state','auction_location_map']).agg(
                 items=('item_id','count'),
                 pickup_dates=('pickup_dates','first'),
@@ -837,15 +835,13 @@ if data is not None:
                 pick = arow['pickup_dates'] or ''
                 pick_list = [d.strip() for d in str(pick).split(';') if d.strip()]
                 pick_str = '; '.join(pick_list[:3])
-                with st.expander(f"{wh_nick} - {title} - {arow['items']} items - ends {end_str} - Pickup {pick_str} ({len(pick_list)} dates)", expanded=False):
-                    st.caption(f"Auction {arow['auction_id']} - {title} - {wh_nick} - {arow['auction_location_address']} {arow['auction_location_city']}, {arow['auction_location_state']}")
-                    st.caption(f"Pickup dates: {pick_str if pick_str else 'See BidFTA'}")
-                    if arow.get('auction_location_map'):
-                        st.markdown(arow['auction_location_map'], unsafe_allow_html=True)
-                    st.link_button("Directions", f"https://www.google.com/maps/search/{arow['auction_location_address']} {arow['auction_location_city']} {arow['auction_location_state']}", type="secondary")
-                    if st.button(f"Filter to this auction", key=f"filt_auc_{arow['auction_id']}"):
-                        st.session_state['filter_auction_id'] = str(arow['auction_id'])
-                        st.rerun()
+                st.markdown(f"**{wh_nick}** - {title} - {arow['items']} items - ends {end_str} - Pickup {pick_str}")
+                st.caption(f"{arow['auction_location_address']} {arow['auction_location_city']}, {arow['auction_location_state']}")
+                st.link_button("Directions", f"https://www.google.com/maps/search/{arow['auction_location_address']} {arow['auction_location_city']} {arow['auction_location_state']}", type="secondary")
+                if st.button(f"Filter to this auction", key=f"filt_auc_{arow['auction_id']}"):
+                    st.session_state['filter_auction_id'] = str(arow['auction_id'])
+                    st.rerun()
+                st.divider()
     # Sidebar filters - clean grouped
     with st.sidebar:
         st.markdown("### Filters")
