@@ -191,25 +191,48 @@ button[data-baseweb="tab"][aria-selected="true"] { color: #0f172a; font-weight: 
 .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 12px; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
 .lightbox-close { position: absolute; top: 18px; right: 22px; color: white; font-size: 28px; cursor: pointer; }
 
-/* Force dark text inside white cards even in Streamlit dark theme */
+/* Light: dark text in white cards */
 .gallery-card, .gallery-card * { color: #0f172a; }
 .gallery-card .pill, .gallery-card .pill * { color: inherit; }
-.pill-discount, .pill-discount * { color: #dc2626 !important; }
-.pill-bids, .pill-bids * { color: #1d4ed8 !important; }
-.pill-brand, .pill-brand * { color: #7c3aed !important; }
-.pill-warehouse, .pill-warehouse * { color: #c2410c !important; }
-.pill-otd, .pill-otd * { color: #047857 !important; }
-.pill-pics, .pill-pics * { color: #475569 !important; }
-.urgency-critical, .urgency-critical * { color: #dc2626 !important; }
-.urgency-high, .urgency-high * { color: #ea580c !important; }
-.urgency-medium, .urgency-medium * { color: #b45309 !important; }
 
-/* Clean old hover */
-[data-testid="column"] img, [data-testid="stImage"] img { transition: transform .18s; }
-
-/* Hide Streamlit default chrome for cleaner look */
+/* Hide Streamlit default chrome */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
+
+/* Dark theme overrides */
+@media (prefers-color-scheme: dark) {
+  .gallery-body { background: #1e293b; color: #e2e8f0; }
+  .gallery-card, .gallery-card * { color: #e2e8f0; }
+  .gallery-card { border-color: #334155; background: #1e293b; }
+  .gallery-title { color: #f1f5f9 !important; }
+  .gallery-price { color: #f1f5f9; }
+  .gallery-msrp { color: #64748b; }
+  .gallery-save { background: #064e3b; color: #6ee7b7; border-color: #065f46; }
+  .gallery-save-zero { background: #1e293b !important; border-color: #334155 !important; color: #64748b !important; }
+  .gallery-meta { color: #94a3b8; }
+  .pill-discount { background: #450a0a; color: #fca5a5 !important; border-color: #7f1d1d; }
+  .pill-bids { background: #1e1b4b; color: #93c5fd !important; border-color: #312e81; }
+  .pill-brand { background: #2e1065; color: #c4b5fd !important; border-color: #3b0764; }
+  .pill-warehouse { background: #431407; color: #fdba74 !important; border-color: #7c2d12; }
+  .pill-otd { background: #052e16; color: #86efac !important; border-color: #064e3b; }
+  .pill-pics, .pill-condition { background: #1e293b; color: #94a3b8 !important; border-color: #334155; }
+  .pill-active { background: #0c4a6e; color: #7dd3fc !important; border-color: #075985; }
+  .deal-good { background: #064e3b; color: #6ee7b7; border-color: #065f46; }
+  .deal-fair { background: #451a03; color: #fbbf24; border-color: #78350f; }
+  .deal-unknown, .deal-research { background: #1e293b; color: #94a3b8; border-color: #334155; }
+  .urgency-critical { color: #f87171 !important; }
+  .urgency-high { color: #fb923c !important; }
+  .urgency-medium { color: #fbbf24 !important; }
+  .filter-pill { background: #1e293b; border-color: #334155; color: #cbd5e1; }
+  .filter-pill b { color: #f1f5f9; }
+  [data-testid="stMetric"] { background: #1e293b; border-color: #334155; }
+  [data-testid="stMetricLabel"] { color: #94a3b8; }
+  [data-testid="stMetricValue"] { color: #f1f5f9; }
+  section[data-testid="stSidebar"] { background: #0f172a; border-right-color: #1e293b; }
+  section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 { color: #f1f5f9; }
+  button[data-baseweb="tab"] { color: #94a3b8; }
+  button[data-baseweb="tab"][aria-selected="true"] { color: #f1f5f9; }
+}
 </style>
 """
 
